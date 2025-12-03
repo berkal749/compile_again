@@ -21,12 +21,14 @@ int yyerror(char *msg) {
 %token <string_literal> string_literal
 %token mc_main mc_int mc_flt  cst mc_real err mc_section_var mc_section_code mc_start mc_print
 %token mc_number mc_identifier mc_assign_op mc_semicolon mc_comma mc_colon
-%token mc_lbrace mc_rbrace mc_lparen mc_rparen mc_mult mc_plus mc_div mc_stop mc_if mc_else op_logic mc_while mc_for  mc_pow
+%token mc_lbrace mc_rbrace mc_lparen mc_rparen mc_mult mc_plus mc_div mc_stop mc_if mc_else op_logic mc_while mc_for  mc_pow  mc_lbracket mc_rbracket
 
 
+%left OR
+%left AND
+%right mc_pow
 %left mc_plus
 %left mc_mult mc_div
-
 %%
 
 S: mc_main mc_identifier mc_semicolon SV SC  {
@@ -40,11 +42,11 @@ SV: mc_section_var DECLARATION_LIST;
 SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace mc_stop;
 
 DECLARATION_LIST:
-      /* empty */
+      
     | DECLARATION_LIST DEC
 ;
 
-DEC: VAR_LIST mc_colon TYPE mc_semicolon;
+DEC: VAR_LIST mc_colon TYPE mc_semicolon | "T" mc_lbracket mc_identifier mc_rbracket  mc_colon TYPE mc_semicolon;
 
 VAR_LIST:
       mc_identifier
@@ -63,13 +65,13 @@ CODE:
 
 INSTRUCTION:
       ASSIGNMENT
-    | PRINT_STMT | IF_STMT | WHILE_STMT | FOR_STMT
+    | PRINT_STMT | IF_STMT | WHILE_STMT | FOR_STMT 
 ;
 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace | mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace;
 
 ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon;
 
-PRINT_STMT: mc_print mc_lparen condition mc_rparen mc_semicolon;
+PRINT_STMT: mc_print mc_lparen string_literal mc_rparen mc_semicolon;
 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace CODE mc_rbrace;
 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace;
 condition:  expr | expr op_logic expr | condition "AND" condition | condition "OR" condition ;

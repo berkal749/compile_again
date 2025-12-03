@@ -69,7 +69,11 @@
      op_logic = 285,
      mc_while = 286,
      mc_for = 287,
-     mc_pow = 288
+     mc_pow = 288,
+     mc_lbracket = 289,
+     mc_rbracket = 290,
+     OR = 291,
+     AND = 292
    };
 #endif
 
@@ -88,7 +92,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 92 "syn.tab.h"
+#line 96 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

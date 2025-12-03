@@ -2,6 +2,7 @@
 %{
     #include<stdio.h>
     #include "syn.tab.h"
+    #include "TS.h"
     // Partie : Déclarations en C
        int nb_ligne = 1;
 int col = 1;
@@ -30,7 +31,7 @@ OPLOGIC (<=|>=|==|!=|>|<)
 "for" {col+=yyleng; printf("for \n"); return mc_for;}
 "Stop" { col+=yyleng; printf("Stop \n");  return mc_stop; }
 
-{OPLOGIC} { col+=yyleng; printf("nbr_real\n"); return op_logic }
+{OPLOGIC} { col+=yyleng; printf("nbr_real\n"); return op_logic; }
  
 
 
@@ -49,6 +50,8 @@ OPLOGIC (<=|>=|==|!=|>|<)
 "{" {col+=yyleng; printf("{ \n"); return mc_lbrace;}
 "}" {col+=yyleng; printf("} \n"); return mc_rbrace;}
 "(" {col+=yyleng; printf("( \n"); return mc_lparen;}
+"[" {col+=yyleng; printf("[ \n"); return mc_lbracket;}
+"]" {col+=yyleng; printf("] \n"); return mc_rbracket;}
 ")" {col+=yyleng; printf(") \n"); return mc_rparen;}
 "*" {col+=yyleng; printf("* \n"); return mc_mult;}
 "+" {col+=yyleng; printf("+ \n"); return mc_plus;}
