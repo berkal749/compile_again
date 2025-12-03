@@ -14,7 +14,8 @@ IDF {lettre}({lettre}|{chiffre}|_)*
 cst {chiffre}+
 string \"([^\"\\]|\\.)*\"
 PRINT print[ \t]*\([ \t]*{string}[ \t]*\)[ \t]*;
-comment ^%%.*     
+comment ^%%.*    
+OPLOGIC (<=|>=|==|!=|>|<) 
 
 /* -- Partie : Règles de traduction -- */
 %%
@@ -28,6 +29,8 @@ comment ^%%.*
 "while" {col+=yyleng; printf("while \n"); return mc_while;}
 "for" {col+=yyleng; printf("for \n"); return mc_for;}
 "Stop" { col+=yyleng; printf("Stop \n");  return mc_stop; }
+
+{OPLOGIC} { col+=yyleng; printf("nbr_real\n"); return op_logic }
  
 
 
@@ -50,6 +53,7 @@ comment ^%%.*
 "*" {col+=yyleng; printf("* \n"); return mc_mult;}
 "+" {col+=yyleng; printf("+ \n"); return mc_plus;}
 "/" {col+=yyleng; printf("/ \n"); return mc_div;}
+"^" {col+=yyleng; printf("^ \n"); return mc_pow;}
 {string} { yylval.string_literal = strdup(yytext); return string_literal; }
 [ \t]+    { col += yyleng; /* skip spaces */ }
 \n        { nb_ligne++; col=1; }

@@ -1,7 +1,14 @@
 Terminals unused in grammar
 
-   cst
    err
+
+
+State 75 conflicts: 2 shift/reduce
+State 76 conflicts: 2 shift/reduce
+State 77 conflicts: 1 shift/reduce
+State 78 conflicts: 1 shift/reduce
+State 79 conflicts: 1 shift/reduce
+State 81 conflicts: 4 shift/reduce
 
 
 Grammar
@@ -30,79 +37,121 @@ Grammar
 
    13 INSTRUCTION: ASSIGNMENT
    14            | PRINT_STMT
+   15            | IF_STMT
+   16            | WHILE_STMT
+   17            | FOR_STMT
 
-   15 ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon
+   18 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace
+   19        | mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
 
-   16 PRINT_STMT: mc_print mc_lparen string_literal mc_rparen mc_semicolon
+   20 ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon
 
-   17 EXPR: mc_number
-   18     | mc_real
-   19     | mc_identifier
-   20     | mc_lparen EXPR mc_rparen
-   21     | EXPR mc_plus EXPR
-   22     | EXPR mc_mult EXPR
-   23     | EXPR mc_div EXPR
+   21 PRINT_STMT: mc_print mc_lparen condition mc_rparen mc_semicolon
+
+   22 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace CODE mc_rbrace
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
+
+   24 condition: expr
+   25          | expr op_logic expr
+   26          | condition "AND" condition
+   27          | condition "OR" condition
+
+   28 expr: expr mc_plus expr
+   29     | expr mc_mult expr
+   30     | expr mc_div expr
+   31     | expr mc_pow expr
+   32     | mc_identifier
+   33     | cst
+   34     | mc_real
+   35     | mc_lparen expr mc_rparen
+
+   36 EXPR: mc_number
+   37     | mc_real
+   38     | mc_identifier
+   39     | mc_lparen EXPR mc_rparen
+   40     | EXPR mc_plus EXPR
+   41     | EXPR mc_mult EXPR
+   42     | EXPR mc_div EXPR
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-string_literal (258) 16
+string_literal (258) 18 19
 mc_main (259) 1
 mc_int (260) 9
 mc_flt (261) 10
-cst (262)
-mc_real (263) 18
+cst (262) 33
+mc_real (263) 34 37
 err (264)
 mc_section_var (265) 2
 mc_section_code (266) 3
 mc_start (267) 3
-mc_print (268) 16
-mc_number (269) 17
-mc_identifier (270) 1 7 8 15 19
-mc_assign_op (271) 15
-mc_semicolon (272) 1 6 15 16
+mc_print (268) 21
+mc_number (269) 36
+mc_identifier (270) 1 7 8 20 32 38
+mc_assign_op (271) 20
+mc_semicolon (272) 1 6 20 21 23
 mc_comma (273) 8
 mc_colon (274) 6
-mc_lbrace (275) 3
-mc_rbrace (276) 3
-mc_lparen (277) 16 20
-mc_rparen (278) 16 20
-mc_mult (279) 22
-mc_plus (280) 21
-mc_div (281) 23
+mc_lbrace (275) 3 18 19 22 23
+mc_rbrace (276) 3 18 19 22 23
+mc_lparen (277) 21 35 39
+mc_rparen (278) 18 19 21 22 23 35 39
+mc_mult (279) 29 41
+mc_plus (280) 28 40
+mc_div (281) 30 42
 mc_stop (282) 3
+mc_if (283) 18 19
+mc_else (284) 19
+op_logic (285) 25
+mc_while (286) 22
+mc_for (287) 23
+mc_pow (288) 31
+"AND" (289) 26
+"OR" (290) 27
 
 
 Nonterminals, with rules where they appear
 
-$accept (28)
+$accept (36)
     on left: 0
-S (29)
+S (37)
     on left: 1, on right: 0
-SV (30)
+SV (38)
     on left: 2, on right: 1
-SC (31)
+SC (39)
     on left: 3, on right: 1
-DECLARATION_LIST (32)
+DECLARATION_LIST (40)
     on left: 4 5, on right: 2 5
-DEC (33)
+DEC (41)
     on left: 6, on right: 5
-VAR_LIST (34)
+VAR_LIST (42)
     on left: 7 8, on right: 6 8
-TYPE (35)
+TYPE (43)
     on left: 9 10, on right: 6
-CODE (36)
-    on left: 11 12, on right: 3 12
-INSTRUCTION (37)
-    on left: 13 14, on right: 12
-ASSIGNMENT (38)
-    on left: 15, on right: 13
-PRINT_STMT (39)
-    on left: 16, on right: 14
-EXPR (40)
-    on left: 17 18 19 20 21 22 23, on right: 15 20 21 22 23
+CODE (44)
+    on left: 11 12, on right: 3 12 18 19 22 23
+INSTRUCTION (45)
+    on left: 13 14 15 16 17, on right: 12
+IF_STMT (46)
+    on left: 18 19, on right: 15
+ASSIGNMENT (47)
+    on left: 20, on right: 13 23
+PRINT_STMT (48)
+    on left: 21, on right: 14
+WHILE_STMT (49)
+    on left: 22, on right: 16
+FOR_STMT (50)
+    on left: 23, on right: 17
+condition (51)
+    on left: 24 25 26 27, on right: 21 22 23 26 27
+expr (52)
+    on left: 28 29 30 31 32 33 34 35, on right: 24 25 28 29 30 31 35
+EXPR (53)
+    on left: 36 37 38 39 40 41 42, on right: 20 39 40 41 42
 
 
 state 0
@@ -288,10 +337,16 @@ state 22
     mc_print       shift, and go to state 24
     mc_identifier  shift, and go to state 25
     mc_rbrace      shift, and go to state 26
+    mc_if          shift, and go to state 27
+    mc_while       shift, and go to state 28
+    mc_for         shift, and go to state 29
 
-    INSTRUCTION  go to state 27
-    ASSIGNMENT   go to state 28
-    PRINT_STMT   go to state 29
+    INSTRUCTION  go to state 30
+    IF_STMT      go to state 31
+    ASSIGNMENT   go to state 32
+    PRINT_STMT   go to state 33
+    WHILE_STMT   go to state 34
+    FOR_STMT     go to state 35
 
 
 state 23
@@ -303,230 +358,817 @@ state 23
 
 state 24
 
-   16 PRINT_STMT: mc_print . mc_lparen string_literal mc_rparen mc_semicolon
+   21 PRINT_STMT: mc_print . mc_lparen condition mc_rparen mc_semicolon
 
-    mc_lparen  shift, and go to state 30
+    mc_lparen  shift, and go to state 36
 
 
 state 25
 
-   15 ASSIGNMENT: mc_identifier . mc_assign_op EXPR mc_semicolon
+   20 ASSIGNMENT: mc_identifier . mc_assign_op EXPR mc_semicolon
 
-    mc_assign_op  shift, and go to state 31
+    mc_assign_op  shift, and go to state 37
 
 
 state 26
 
     3 SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace . mc_stop
 
-    mc_stop  shift, and go to state 32
+    mc_stop  shift, and go to state 38
 
 
 state 27
+
+   18 IF_STMT: mc_if . mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace
+   19        | mc_if . mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
+
+    mc_rparen  shift, and go to state 39
+
+
+state 28
+
+   22 WHILE_STMT: mc_while . mc_rparen condition mc_rparen mc_lbrace CODE mc_rbrace
+
+    mc_rparen  shift, and go to state 40
+
+
+state 29
+
+   23 FOR_STMT: mc_for . mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
+
+    mc_rparen  shift, and go to state 41
+
+
+state 30
 
    12 CODE: CODE INSTRUCTION .
 
     $default  reduce using rule 12 (CODE)
 
 
-state 28
+state 31
+
+   15 INSTRUCTION: IF_STMT .
+
+    $default  reduce using rule 15 (INSTRUCTION)
+
+
+state 32
 
    13 INSTRUCTION: ASSIGNMENT .
 
     $default  reduce using rule 13 (INSTRUCTION)
 
 
-state 29
+state 33
 
    14 INSTRUCTION: PRINT_STMT .
 
     $default  reduce using rule 14 (INSTRUCTION)
 
 
-state 30
+state 34
 
-   16 PRINT_STMT: mc_print mc_lparen . string_literal mc_rparen mc_semicolon
+   16 INSTRUCTION: WHILE_STMT .
 
-    string_literal  shift, and go to state 33
-
-
-state 31
-
-   15 ASSIGNMENT: mc_identifier mc_assign_op . EXPR mc_semicolon
-
-    mc_real        shift, and go to state 34
-    mc_number      shift, and go to state 35
-    mc_identifier  shift, and go to state 36
-    mc_lparen      shift, and go to state 37
-
-    EXPR  go to state 38
+    $default  reduce using rule 16 (INSTRUCTION)
 
 
-state 32
+state 35
+
+   17 INSTRUCTION: FOR_STMT .
+
+    $default  reduce using rule 17 (INSTRUCTION)
+
+
+state 36
+
+   21 PRINT_STMT: mc_print mc_lparen . condition mc_rparen mc_semicolon
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    condition  go to state 46
+    expr       go to state 47
+
+
+state 37
+
+   20 ASSIGNMENT: mc_identifier mc_assign_op . EXPR mc_semicolon
+
+    mc_real        shift, and go to state 48
+    mc_number      shift, and go to state 49
+    mc_identifier  shift, and go to state 50
+    mc_lparen      shift, and go to state 51
+
+    EXPR  go to state 52
+
+
+state 38
 
     3 SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace mc_stop .
 
     $default  reduce using rule 3 (SC)
 
 
-state 33
-
-   16 PRINT_STMT: mc_print mc_lparen string_literal . mc_rparen mc_semicolon
-
-    mc_rparen  shift, and go to state 39
-
-
-state 34
-
-   18 EXPR: mc_real .
-
-    $default  reduce using rule 18 (EXPR)
-
-
-state 35
-
-   17 EXPR: mc_number .
-
-    $default  reduce using rule 17 (EXPR)
-
-
-state 36
-
-   19 EXPR: mc_identifier .
-
-    $default  reduce using rule 19 (EXPR)
-
-
-state 37
-
-   20 EXPR: mc_lparen . EXPR mc_rparen
-
-    mc_real        shift, and go to state 34
-    mc_number      shift, and go to state 35
-    mc_identifier  shift, and go to state 36
-    mc_lparen      shift, and go to state 37
-
-    EXPR  go to state 40
-
-
-state 38
-
-   15 ASSIGNMENT: mc_identifier mc_assign_op EXPR . mc_semicolon
-   21 EXPR: EXPR . mc_plus EXPR
-   22     | EXPR . mc_mult EXPR
-   23     | EXPR . mc_div EXPR
-
-    mc_semicolon  shift, and go to state 41
-    mc_mult       shift, and go to state 42
-    mc_plus       shift, and go to state 43
-    mc_div        shift, and go to state 44
-
-
 state 39
 
-   16 PRINT_STMT: mc_print mc_lparen string_literal mc_rparen . mc_semicolon
+   18 IF_STMT: mc_if mc_rparen . string_literal mc_rparen mc_lbrace CODE mc_rbrace
+   19        | mc_if mc_rparen . string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
 
-    mc_semicolon  shift, and go to state 45
+    string_literal  shift, and go to state 53
 
 
 state 40
 
-   20 EXPR: mc_lparen EXPR . mc_rparen
-   21     | EXPR . mc_plus EXPR
-   22     | EXPR . mc_mult EXPR
-   23     | EXPR . mc_div EXPR
+   22 WHILE_STMT: mc_while mc_rparen . condition mc_rparen mc_lbrace CODE mc_rbrace
 
-    mc_rparen  shift, and go to state 46
-    mc_mult    shift, and go to state 42
-    mc_plus    shift, and go to state 43
-    mc_div     shift, and go to state 44
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    condition  go to state 54
+    expr       go to state 47
 
 
 state 41
 
-   15 ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon .
+   23 FOR_STMT: mc_for mc_rparen . ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
 
-    $default  reduce using rule 15 (ASSIGNMENT)
+    mc_identifier  shift, and go to state 25
+
+    ASSIGNMENT  go to state 55
 
 
 state 42
 
-   22 EXPR: EXPR mc_mult . EXPR
+   33 expr: cst .
 
-    mc_real        shift, and go to state 34
-    mc_number      shift, and go to state 35
-    mc_identifier  shift, and go to state 36
-    mc_lparen      shift, and go to state 37
-
-    EXPR  go to state 47
+    $default  reduce using rule 33 (expr)
 
 
 state 43
 
-   21 EXPR: EXPR mc_plus . EXPR
+   34 expr: mc_real .
 
-    mc_real        shift, and go to state 34
-    mc_number      shift, and go to state 35
-    mc_identifier  shift, and go to state 36
-    mc_lparen      shift, and go to state 37
-
-    EXPR  go to state 48
+    $default  reduce using rule 34 (expr)
 
 
 state 44
 
-   23 EXPR: EXPR mc_div . EXPR
+   32 expr: mc_identifier .
 
-    mc_real        shift, and go to state 34
-    mc_number      shift, and go to state 35
-    mc_identifier  shift, and go to state 36
-    mc_lparen      shift, and go to state 37
-
-    EXPR  go to state 49
+    $default  reduce using rule 32 (expr)
 
 
 state 45
 
-   16 PRINT_STMT: mc_print mc_lparen string_literal mc_rparen mc_semicolon .
+   35 expr: mc_lparen . expr mc_rparen
 
-    $default  reduce using rule 16 (PRINT_STMT)
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 56
 
 
 state 46
 
-   20 EXPR: mc_lparen EXPR mc_rparen .
+   21 PRINT_STMT: mc_print mc_lparen condition . mc_rparen mc_semicolon
+   26 condition: condition . "AND" condition
+   27          | condition . "OR" condition
 
-    $default  reduce using rule 20 (EXPR)
+    mc_rparen  shift, and go to state 57
+    "AND"      shift, and go to state 58
+    "OR"       shift, and go to state 59
 
 
 state 47
 
-   21 EXPR: EXPR . mc_plus EXPR
-   22     | EXPR . mc_mult EXPR
-   22     | EXPR mc_mult EXPR .
-   23     | EXPR . mc_div EXPR
+   24 condition: expr .
+   25          | expr . op_logic expr
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
 
-    $default  reduce using rule 22 (EXPR)
+    mc_mult   shift, and go to state 60
+    mc_plus   shift, and go to state 61
+    mc_div    shift, and go to state 62
+    op_logic  shift, and go to state 63
+    mc_pow    shift, and go to state 64
+
+    $default  reduce using rule 24 (condition)
 
 
 state 48
 
-   21 EXPR: EXPR . mc_plus EXPR
-   21     | EXPR mc_plus EXPR .
-   22     | EXPR . mc_mult EXPR
-   23     | EXPR . mc_div EXPR
+   37 EXPR: mc_real .
 
-    mc_mult  shift, and go to state 42
-    mc_div   shift, and go to state 44
-
-    $default  reduce using rule 21 (EXPR)
+    $default  reduce using rule 37 (EXPR)
 
 
 state 49
 
-   21 EXPR: EXPR . mc_plus EXPR
-   22     | EXPR . mc_mult EXPR
-   23     | EXPR . mc_div EXPR
-   23     | EXPR mc_div EXPR .
+   36 EXPR: mc_number .
 
-    $default  reduce using rule 23 (EXPR)
+    $default  reduce using rule 36 (EXPR)
+
+
+state 50
+
+   38 EXPR: mc_identifier .
+
+    $default  reduce using rule 38 (EXPR)
+
+
+state 51
+
+   39 EXPR: mc_lparen . EXPR mc_rparen
+
+    mc_real        shift, and go to state 48
+    mc_number      shift, and go to state 49
+    mc_identifier  shift, and go to state 50
+    mc_lparen      shift, and go to state 51
+
+    EXPR  go to state 65
+
+
+state 52
+
+   20 ASSIGNMENT: mc_identifier mc_assign_op EXPR . mc_semicolon
+   40 EXPR: EXPR . mc_plus EXPR
+   41     | EXPR . mc_mult EXPR
+   42     | EXPR . mc_div EXPR
+
+    mc_semicolon  shift, and go to state 66
+    mc_mult       shift, and go to state 67
+    mc_plus       shift, and go to state 68
+    mc_div        shift, and go to state 69
+
+
+state 53
+
+   18 IF_STMT: mc_if mc_rparen string_literal . mc_rparen mc_lbrace CODE mc_rbrace
+   19        | mc_if mc_rparen string_literal . mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
+
+    mc_rparen  shift, and go to state 70
+
+
+state 54
+
+   22 WHILE_STMT: mc_while mc_rparen condition . mc_rparen mc_lbrace CODE mc_rbrace
+   26 condition: condition . "AND" condition
+   27          | condition . "OR" condition
+
+    mc_rparen  shift, and go to state 71
+    "AND"      shift, and go to state 58
+    "OR"       shift, and go to state 59
+
+
+state 55
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT . condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    condition  go to state 72
+    expr       go to state 47
+
+
+state 56
+
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
+   35     | mc_lparen expr . mc_rparen
+
+    mc_rparen  shift, and go to state 73
+    mc_mult    shift, and go to state 60
+    mc_plus    shift, and go to state 61
+    mc_div     shift, and go to state 62
+    mc_pow     shift, and go to state 64
+
+
+state 57
+
+   21 PRINT_STMT: mc_print mc_lparen condition mc_rparen . mc_semicolon
+
+    mc_semicolon  shift, and go to state 74
+
+
+state 58
+
+   26 condition: condition "AND" . condition
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    condition  go to state 75
+    expr       go to state 47
+
+
+state 59
+
+   27 condition: condition "OR" . condition
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    condition  go to state 76
+    expr       go to state 47
+
+
+state 60
+
+   29 expr: expr mc_mult . expr
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 77
+
+
+state 61
+
+   28 expr: expr mc_plus . expr
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 78
+
+
+state 62
+
+   30 expr: expr mc_div . expr
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 79
+
+
+state 63
+
+   25 condition: expr op_logic . expr
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 80
+
+
+state 64
+
+   31 expr: expr mc_pow . expr
+
+    cst            shift, and go to state 42
+    mc_real        shift, and go to state 43
+    mc_identifier  shift, and go to state 44
+    mc_lparen      shift, and go to state 45
+
+    expr  go to state 81
+
+
+state 65
+
+   39 EXPR: mc_lparen EXPR . mc_rparen
+   40     | EXPR . mc_plus EXPR
+   41     | EXPR . mc_mult EXPR
+   42     | EXPR . mc_div EXPR
+
+    mc_rparen  shift, and go to state 82
+    mc_mult    shift, and go to state 67
+    mc_plus    shift, and go to state 68
+    mc_div     shift, and go to state 69
+
+
+state 66
+
+   20 ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon .
+
+    $default  reduce using rule 20 (ASSIGNMENT)
+
+
+state 67
+
+   41 EXPR: EXPR mc_mult . EXPR
+
+    mc_real        shift, and go to state 48
+    mc_number      shift, and go to state 49
+    mc_identifier  shift, and go to state 50
+    mc_lparen      shift, and go to state 51
+
+    EXPR  go to state 83
+
+
+state 68
+
+   40 EXPR: EXPR mc_plus . EXPR
+
+    mc_real        shift, and go to state 48
+    mc_number      shift, and go to state 49
+    mc_identifier  shift, and go to state 50
+    mc_lparen      shift, and go to state 51
+
+    EXPR  go to state 84
+
+
+state 69
+
+   42 EXPR: EXPR mc_div . EXPR
+
+    mc_real        shift, and go to state 48
+    mc_number      shift, and go to state 49
+    mc_identifier  shift, and go to state 50
+    mc_lparen      shift, and go to state 51
+
+    EXPR  go to state 85
+
+
+state 70
+
+   18 IF_STMT: mc_if mc_rparen string_literal mc_rparen . mc_lbrace CODE mc_rbrace
+   19        | mc_if mc_rparen string_literal mc_rparen . mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
+
+    mc_lbrace  shift, and go to state 86
+
+
+state 71
+
+   22 WHILE_STMT: mc_while mc_rparen condition mc_rparen . mc_lbrace CODE mc_rbrace
+
+    mc_lbrace  shift, and go to state 87
+
+
+state 72
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition . mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
+   26 condition: condition . "AND" condition
+   27          | condition . "OR" condition
+
+    mc_semicolon  shift, and go to state 88
+    "AND"         shift, and go to state 58
+    "OR"          shift, and go to state 59
+
+
+state 73
+
+   35 expr: mc_lparen expr mc_rparen .
+
+    $default  reduce using rule 35 (expr)
+
+
+state 74
+
+   21 PRINT_STMT: mc_print mc_lparen condition mc_rparen mc_semicolon .
+
+    $default  reduce using rule 21 (PRINT_STMT)
+
+
+state 75
+
+   26 condition: condition . "AND" condition
+   26          | condition "AND" condition .
+   27          | condition . "OR" condition
+
+    "AND"  shift, and go to state 58
+    "OR"   shift, and go to state 59
+
+    "AND"     [reduce using rule 26 (condition)]
+    "OR"      [reduce using rule 26 (condition)]
+    $default  reduce using rule 26 (condition)
+
+
+state 76
+
+   26 condition: condition . "AND" condition
+   27          | condition . "OR" condition
+   27          | condition "OR" condition .
+
+    "AND"  shift, and go to state 58
+    "OR"   shift, and go to state 59
+
+    "AND"     [reduce using rule 27 (condition)]
+    "OR"      [reduce using rule 27 (condition)]
+    $default  reduce using rule 27 (condition)
+
+
+state 77
+
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   29     | expr mc_mult expr .
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
+
+    mc_pow  shift, and go to state 64
+
+    mc_pow    [reduce using rule 29 (expr)]
+    $default  reduce using rule 29 (expr)
+
+
+state 78
+
+   28 expr: expr . mc_plus expr
+   28     | expr mc_plus expr .
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
+
+    mc_mult  shift, and go to state 60
+    mc_div   shift, and go to state 62
+    mc_pow   shift, and go to state 64
+
+    mc_pow    [reduce using rule 28 (expr)]
+    $default  reduce using rule 28 (expr)
+
+
+state 79
+
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   30     | expr mc_div expr .
+   31     | expr . mc_pow expr
+
+    mc_pow  shift, and go to state 64
+
+    mc_pow    [reduce using rule 30 (expr)]
+    $default  reduce using rule 30 (expr)
+
+
+state 80
+
+   25 condition: expr op_logic expr .
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
+
+    mc_mult  shift, and go to state 60
+    mc_plus  shift, and go to state 61
+    mc_div   shift, and go to state 62
+    mc_pow   shift, and go to state 64
+
+    $default  reduce using rule 25 (condition)
+
+
+state 81
+
+   28 expr: expr . mc_plus expr
+   29     | expr . mc_mult expr
+   30     | expr . mc_div expr
+   31     | expr . mc_pow expr
+   31     | expr mc_pow expr .
+
+    mc_mult  shift, and go to state 60
+    mc_plus  shift, and go to state 61
+    mc_div   shift, and go to state 62
+    mc_pow   shift, and go to state 64
+
+    mc_mult   [reduce using rule 31 (expr)]
+    mc_plus   [reduce using rule 31 (expr)]
+    mc_div    [reduce using rule 31 (expr)]
+    mc_pow    [reduce using rule 31 (expr)]
+    $default  reduce using rule 31 (expr)
+
+
+state 82
+
+   39 EXPR: mc_lparen EXPR mc_rparen .
+
+    $default  reduce using rule 39 (EXPR)
+
+
+state 83
+
+   40 EXPR: EXPR . mc_plus EXPR
+   41     | EXPR . mc_mult EXPR
+   41     | EXPR mc_mult EXPR .
+   42     | EXPR . mc_div EXPR
+
+    $default  reduce using rule 41 (EXPR)
+
+
+state 84
+
+   40 EXPR: EXPR . mc_plus EXPR
+   40     | EXPR mc_plus EXPR .
+   41     | EXPR . mc_mult EXPR
+   42     | EXPR . mc_div EXPR
+
+    mc_mult  shift, and go to state 67
+    mc_div   shift, and go to state 69
+
+    $default  reduce using rule 40 (EXPR)
+
+
+state 85
+
+   40 EXPR: EXPR . mc_plus EXPR
+   41     | EXPR . mc_mult EXPR
+   42     | EXPR . mc_div EXPR
+   42     | EXPR mc_div EXPR .
+
+    $default  reduce using rule 42 (EXPR)
+
+
+state 86
+
+   18 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace . CODE mc_rbrace
+   19        | mc_if mc_rparen string_literal mc_rparen mc_lbrace . CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace
+
+    $default  reduce using rule 11 (CODE)
+
+    CODE  go to state 89
+
+
+state 87
+
+   22 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace . CODE mc_rbrace
+
+    $default  reduce using rule 11 (CODE)
+
+    CODE  go to state 90
+
+
+state 88
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon . ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace
+
+    mc_identifier  shift, and go to state 25
+
+    ASSIGNMENT  go to state 91
+
+
+state 89
+
+   12 CODE: CODE . INSTRUCTION
+   18 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE . mc_rbrace
+   19        | mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE . mc_rbrace mc_else mc_lbrace CODE mc_rbrace
+
+    mc_print       shift, and go to state 24
+    mc_identifier  shift, and go to state 25
+    mc_rbrace      shift, and go to state 92
+    mc_if          shift, and go to state 27
+    mc_while       shift, and go to state 28
+    mc_for         shift, and go to state 29
+
+    INSTRUCTION  go to state 30
+    IF_STMT      go to state 31
+    ASSIGNMENT   go to state 32
+    PRINT_STMT   go to state 33
+    WHILE_STMT   go to state 34
+    FOR_STMT     go to state 35
+
+
+state 90
+
+   12 CODE: CODE . INSTRUCTION
+   22 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace CODE . mc_rbrace
+
+    mc_print       shift, and go to state 24
+    mc_identifier  shift, and go to state 25
+    mc_rbrace      shift, and go to state 93
+    mc_if          shift, and go to state 27
+    mc_while       shift, and go to state 28
+    mc_for         shift, and go to state 29
+
+    INSTRUCTION  go to state 30
+    IF_STMT      go to state 31
+    ASSIGNMENT   go to state 32
+    PRINT_STMT   go to state 33
+    WHILE_STMT   go to state 34
+    FOR_STMT     go to state 35
+
+
+state 91
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT . mc_rparen mc_lbrace CODE mc_rbrace
+
+    mc_rparen  shift, and go to state 94
+
+
+state 92
+
+   18 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace .
+   19        | mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace . mc_else mc_lbrace CODE mc_rbrace
+
+    mc_else  shift, and go to state 95
+
+    $default  reduce using rule 18 (IF_STMT)
+
+
+state 93
+
+   22 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace CODE mc_rbrace .
+
+    $default  reduce using rule 22 (WHILE_STMT)
+
+
+state 94
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen . mc_lbrace CODE mc_rbrace
+
+    mc_lbrace  shift, and go to state 96
+
+
+state 95
+
+   19 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else . mc_lbrace CODE mc_rbrace
+
+    mc_lbrace  shift, and go to state 97
+
+
+state 96
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace . CODE mc_rbrace
+
+    $default  reduce using rule 11 (CODE)
+
+    CODE  go to state 98
+
+
+state 97
+
+   19 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace . CODE mc_rbrace
+
+    $default  reduce using rule 11 (CODE)
+
+    CODE  go to state 99
+
+
+state 98
+
+   12 CODE: CODE . INSTRUCTION
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE . mc_rbrace
+
+    mc_print       shift, and go to state 24
+    mc_identifier  shift, and go to state 25
+    mc_rbrace      shift, and go to state 100
+    mc_if          shift, and go to state 27
+    mc_while       shift, and go to state 28
+    mc_for         shift, and go to state 29
+
+    INSTRUCTION  go to state 30
+    IF_STMT      go to state 31
+    ASSIGNMENT   go to state 32
+    PRINT_STMT   go to state 33
+    WHILE_STMT   go to state 34
+    FOR_STMT     go to state 35
+
+
+state 99
+
+   12 CODE: CODE . INSTRUCTION
+   19 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE . mc_rbrace
+
+    mc_print       shift, and go to state 24
+    mc_identifier  shift, and go to state 25
+    mc_rbrace      shift, and go to state 101
+    mc_if          shift, and go to state 27
+    mc_while       shift, and go to state 28
+    mc_for         shift, and go to state 29
+
+    INSTRUCTION  go to state 30
+    IF_STMT      go to state 31
+    ASSIGNMENT   go to state 32
+    PRINT_STMT   go to state 33
+    WHILE_STMT   go to state 34
+    FOR_STMT     go to state 35
+
+
+state 100
+
+   23 FOR_STMT: mc_for mc_rparen ASSIGNMENT condition mc_semicolon ASSIGNMENT mc_rparen mc_lbrace CODE mc_rbrace .
+
+    $default  reduce using rule 23 (FOR_STMT)
+
+
+state 101
+
+   19 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace .
+
+    $default  reduce using rule 19 (IF_STMT)

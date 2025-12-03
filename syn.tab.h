@@ -63,7 +63,13 @@
      mc_mult = 279,
      mc_plus = 280,
      mc_div = 281,
-     mc_stop = 282
+     mc_stop = 282,
+     mc_if = 283,
+     mc_else = 284,
+     op_logic = 285,
+     mc_while = 286,
+     mc_for = 287,
+     mc_pow = 288
    };
 #endif
 
@@ -82,7 +88,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 86 "syn.tab.h"
+#line 92 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
