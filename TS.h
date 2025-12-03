@@ -137,17 +137,4 @@ void afficher() {
     }
 }
 
-// Example usage
-int main() {
-    initialization();
 
-    rechercher("x", "ID", "int", "0", 1);
-    rechercher("y", "ID", "int", "0", 1);
-    rechercher("total", "ID", "float", "0.0", 1);
-    rechercher("print", "KW", "function", "", 2);
-    rechercher("{", "SEP", "separator", "", 3);
-
-    afficher();
-
-    return 0;
-}

@@ -91,6 +91,8 @@ EXPR:
 %%
 
 int main() {
+    initialization();
     yyparse();
+    afficher();
     return 0;
 }
