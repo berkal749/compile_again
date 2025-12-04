@@ -3,15 +3,18 @@
     #include<stdio.h>
     #include "syn.tab.h"
     #include "TS.h"
+    
     // Partie : Déclarations en C
        int nb_ligne = 1;
 int col = 1;
+
 %}
 /* -- Partie : Expressions régulières -- */
 lettre [a-zA-Z]
 real [+-]?[0-9]+\.[0-9]+
 chiffre [0-9]
-IDF {lettre}({lettre}|{chiffre}|_)*
+IDF {lettre}({lettre}|{chiffre}|_)*   
+
 cst {chiffre}+
 string \"([^\"\\]|\\.)*\"
 PRINT print[ \t]*\([ \t]*{string}[ \t]*\)[ \t]*;
@@ -36,14 +39,14 @@ OPLOGIC (<=|>=|==|!=|>|<)
 
 
 "Integer" {col+=yyleng; printf("KEYWORD\n"); return mc_int;}
-"Float" {col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
-{real} {col+=yyleng; printf("nbr_real\n"); return mc_real;}
+"Float" { yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
+{real} {   yylval.str=strdup(yytext); col+=yyleng; printf("nbr_real\n"); return mc_real;}     
 {comment} { /* Ignorer les commentaires */ }
 
 
 ";" {col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
-{IDF} { rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
-{cst} { rechercher(yytext, "Nombre", "", "", 1); col+=yyleng; printf("NUMBER\n"); return mc_number;}
+{IDF} { rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
+{cst} { rechercher(yytext, "Nombre", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
 ":="   {rechercher(yytext, "AssignOp", "", "", 3); col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
 "," { rechercher(yytext, "Virgule", "", "", 3); col+=yyleng; printf("COMMA\n"); return mc_comma;}
 ":" { rechercher(yytext, "DeuxPoints", "", "", 3); col+=yyleng; printf("COLON\n"); return mc_colon;}

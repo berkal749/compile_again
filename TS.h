@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct TSNode {
     int state;
@@ -21,120 +21,188 @@ TSNode *TSHead = NULL;
 SMNode *MHead = NULL;
 SMNode *SHead = NULL;
 
-// Initialize heads
+
 void initialization() {
-    TSHead = NULL;
-    MHead = NULL;
-    SHead = NULL;
+    
+TSHead = NULL;
+MHead = NULL;
+SHead = NULL;
+
 }
 
-// Insert function
-void inserer(const char entite[], const char code[], const char type[], const char val[], int y) {
-    if (y == 1) {
-        TSNode *newNode = malloc(sizeof(TSNode));
-        if (!newNode) { perror("malloc failed"); exit(1); }
-        newNode->state = 1;
-        strcpy(newNode->name, entite);
-        strcpy(newNode->code, code);
-        strcpy(newNode->type, type);
-        strcpy(newNode->val, val);
-        newNode->next = NULL;
+void inserer(char entite[], char code[],char type[],char val[], int y)
+{
+    switch(y)
+    {
+        case 1: {
+            TSNode *newNode = malloc(sizeof(TSNode));
+            newNode->state = 1;
+            strcpy(newNode->name, entite);
+            strcpy(newNode->code, code);
+            strcpy(newNode->type, type);
+            strcpy(newNode->val, val);
+            newNode->next = NULL;
+            if(TSHead == NULL)
+            {
+                TSHead = newNode;
+                break;
+            }
 
-        if (!TSHead) {
-            TSHead = newNode;
-        } else {
-            TSNode *cur = TSHead;
-            while (cur->next) cur = cur->next;
-            cur->next = newNode;
+            TSNode *current = TSHead;
+            while(current->next != NULL)
+            {
+                current = current->next;
+            }
+
+            current->next = newNode;
+            break;
         }
-    } else if (y == 2) {
-        SMNode *newNode = malloc(sizeof(SMNode));
-        if (!newNode) { perror("malloc failed"); exit(1); }
-        strcpy(newNode->name, entite);
-        strcpy(newNode->type, type);
-        newNode->next = NULL;
+        case 2: {
+            SMNode *newNode = malloc(sizeof(SMNode));
+            strcpy(newNode->name, entite);
+            strcpy(newNode->type, type);
+            newNode->next = NULL;
+            if(MHead == NULL)
+            {
+                MHead = newNode;
+                break;
+            }
 
-        if (!MHead) {
-            MHead = newNode;
-        } else {
-            SMNode *cur = MHead;
-            while (cur->next) cur = cur->next;
-            cur->next = newNode;
+            SMNode *current = MHead;
+            while(current->next != NULL)
+            {
+                current = current->next;
+            }
+
+            current->next = newNode;
+            break;
         }
-    } else if (y == 3) {
-        SMNode *newNode = malloc(sizeof(SMNode));
-        if (!newNode) { perror("malloc failed"); exit(1); }
-        strcpy(newNode->name, entite);
-        strcpy(newNode->type, type);
-        newNode->next = NULL;
+         case 3: {
+            SMNode *newNode = malloc(sizeof(SMNode));
+            strcpy(newNode->name, entite);
+            strcpy(newNode->type, type);
+           newNode->next = NULL;
+            if(SHead == NULL)
+            {
+                SHead = newNode;
+                break;
+            }
 
-        if (!SHead) {
-            SHead = newNode;
-        } else {
-            SMNode *cur = SHead;
-            while (cur->next) cur = cur->next;
-            cur->next = newNode;
-        }
-    }
-}
+            SMNode *current = SHead;
+            while(current->next != NULL)
+            {
+                current = current->next;
+            }
 
-// Search function
-void rechercher(const char entite[], const char code[], const char type[], const char val[], int y) {
-    if (y == 1) {
-        TSNode *cur = TSHead;
-        while (cur && (strcmp(cur->name, entite) != 0 || cur->state != 1)) cur = cur->next;
-
-        if (!cur || strcmp(cur->name, entite) != 0) {
-            inserer(entite, code, type, val, 1);
-        } else {
-            printf("L'entite %s existe deja\n", entite);
-        }
-    } else if (y == 2) {
-        SMNode *cur = MHead;
-        while (cur && strcmp(cur->name, entite) != 0) cur = cur->next;
-
-        if (!cur) {
-            inserer(entite, code, type, val, 2);
-        } else {
-            printf("L'entite %s existe deja\n", entite);
-        }
-    } else if (y == 3) {
-        SMNode *cur = SHead;
-        while (cur && strcmp(cur->name, entite) != 0) cur = cur->next;
-
-        if (!cur) {
-            inserer(entite, code, type, val, 3);
-        } else {
-            printf("L'entite %s existe deja\n", entite);
+            current->next = newNode;
+            break;
         }
     }
 }
 
-// Display tables
-void afficher() {
-    printf("\n--- Table des symboles IDF et CST ---\n");
-    printf("Nom_Entite | Code_Entite | Type_Entite | Val_Entite\n");
-    TSNode *cur = TSHead;
-    while (cur) {
-        printf("%-11s | %-12s | %-12s | %-12s\n", cur->name, cur->code, cur->type, cur->val);
-        cur = cur->next;
-    }
+void rechercher(char entite[], char code[],char type[],char val[],int y)
+{
+    switch(y)
+    {
+        case 1: {
+            TSNode *current = TSHead;
+            while((current != NULL)&&(strcmp(current->name, entite) != 0)&&(current->state == 1))
+            {
+                current = current->next;
+            }
 
-    printf("\n--- Table des symboles mots cles ---\n");
-    printf("NomEntite | CodeEntite\n");
-    SMNode *curM = MHead;
-    while (curM) {
-        printf("%-10s | %-12s\n", curM->name, curM->type);
-        curM = curM->next;
-    }
-
-    printf("\n--- Table des symboles separateurs ---\n");
-    printf("NomEntite | CodeEntite\n");
-    SMNode *curS = SHead;
-    while (curS) {
-        printf("%-10s | %-12s\n", curS->name, curS->type);
-        curS = curS->next;
+            if((current == NULL) || strcmp(current->name, entite) != 0)
+            {
+                inserer(entite, code, type, val, 1);
+            }
+            else
+            {
+                printf("L'entite %s existe deja\n", entite);
+            }
+            break;
+            
+        }
+        case 2: {
+            SMNode *current = MHead;
+            while((current != NULL)&&(strcmp(current->name, entite) != 0))
+            {
+                current = current->next;
+            }
+            
+            if(current == NULL || strcmp(current->name, entite) != 0)
+            {
+                inserer(entite, code, type, val, 2);
+            }
+            else
+            {
+                printf("L'entite %s existe deja\n", entite);
+            }
+            break;
+            
+        }
+        case 3: {
+            SMNode *current = SHead;
+            while((current != NULL)&&(strcmp(current->name, entite) != 0))
+            {
+                current = current->next;
+            }
+            
+            if(current == NULL || strcmp(current->name, entite) != 0)
+            {
+                inserer(entite, code, type, val, 3);
+            }
+            else
+            {
+                printf("L'entite %s existe deja\n", entite);
+            }
+            break;
+        }
     }
 }
 
+void afficher()
+{
+    printf("\n____________________________________________________________________\n");
+    printf("/***************Table des symboles IDF et CST*************/\n");
+    printf("____________________________________________________________________\n");
+    printf("\t| Nom_Entite |  Code_Entite | Type_Entite | Val_Entite\n");
+    printf("____________________________________________________________________\n");
 
+    TSNode *current = TSHead;
+    while(current != NULL)
+    {
+        printf("\t|%11s |%12s | %12s | %12s\n", current->name, current->code, current->type, current->val);
+        current = current->next;
+    }
+
+
+    printf("\n____________________________________________________________________\n");
+    printf("\n/***************Table des symboles mots cles*************/\n");
+    printf("_____________________________________\n");
+    printf("\t| NomEntite |  CodeEntite | \n");
+    printf("_____________________________________\n");
+
+    SMNode *currentM = MHead;
+    while(currentM != NULL)
+    {
+        printf("\t|%10s |%12s \n", currentM->name, currentM->type);
+        currentM = currentM->next;
+    }
+
+
+    printf("\n____________________________________________________________________\n");
+    printf("\n/***************Table des symboles separateurs*************/\n");
+    printf("_____________________________________\n");
+    printf("\t| NomEntite |  CodeEntite | \n");
+    printf("_____________________________________\n");
+
+    SMNode *currentS = SHead;
+    while(currentS != NULL)
+    {
+        printf("\t|%10s |%12s \n", currentS->name, currentS->type);
+        currentS = currentS->next;
+    }
+
+
+
+}

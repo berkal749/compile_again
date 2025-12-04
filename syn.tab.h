@@ -87,12 +87,15 @@ typedef union YYSTYPE
 #line 15 "syn.y"
 
     char* string_literal;
-    double mc_number;
+    
+    char* str ;
+    int ent ;
+    
 
 
 
 /* Line 1676 of yacc.c  */
-#line 96 "syn.tab.h"
+#line 99 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
