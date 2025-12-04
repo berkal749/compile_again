@@ -487,8 +487,8 @@ static const yytype_uint8 yyrline[] =
        0,    37,    37,    43,    45,    47,    49,    52,    52,    59,
       64,    72,    73,    76,    78,    82,    83,    83,    83,    83,
       85,    85,    87,    89,    90,    91,    92,    92,    92,    92,
-      93,    93,    93,    93,    93,    93,    93,    93,    94,   102,
-     105,   109,   110,   111,   112,   113
+      93,    93,    93,    93,    93,    93,    93,    93,    94,   101,
+     104,   108,   109,   110,   111,   112
 };
 #endif
 
@@ -1506,8 +1506,7 @@ yyreduce:
 #line 94 "syn.y"
     {
     if ((yyvsp[(3) - (3)].str)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
-if(rechercherType((yyvsp[(1) - (3)].str))==0) printf("Erreur semantique: %s non declare a Ia ligne %d \n",(yyvsp[(1) - (3)].str),nb_ligne);
-if(rechercherType((yyvsp[(3) - (3)].str))==0) printf("Erreur semantique: %s non declare a la ligne %d \n",(yyvsp[(3) - (3)].str),nb_ligne);
+
 
 ;}
     break;
@@ -1515,7 +1514,7 @@ if(rechercherType((yyvsp[(3) - (3)].str))==0) printf("Erreur semantique: %s non 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 102 "syn.y"
+#line 101 "syn.y"
     {
         if ((yyvsp[(1) - (1)].ent)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
         
@@ -1525,17 +1524,17 @@ if(rechercherType((yyvsp[(3) - (3)].str))==0) printf("Erreur semantique: %s non 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 105 "syn.y"
+#line 104 "syn.y"
     {
         if ((yyvsp[(1) - (1)].str)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
-       
+        
     ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1539 "syn.tab.c"
+#line 1538 "syn.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1747,7 +1746,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 117 "syn.y"
+#line 116 "syn.y"
 
 
 int main() {

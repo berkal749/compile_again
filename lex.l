@@ -43,11 +43,11 @@ OPLOGIC (<=|>=|==|!=|>|<)
 {real} {   yylval.str=strdup(yytext); col+=yyleng; printf("nbr_real\n"); return mc_real;}     
 {comment} { /* Ignorer les commentaires */ }
 
+{IDF} { rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
 
 ";" {col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
-{IDF} { rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
 {cst} { rechercher(yytext, "Nombre", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
-":="   {rechercher(yytext, "AssignOp", "", "", 3); col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
+":="   { col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
 "," { rechercher(yytext, "Virgule", "", "", 3); col+=yyleng; printf("COMMA\n"); return mc_comma;}
 ":" { rechercher(yytext, "DeuxPoints", "", "", 3); col+=yyleng; printf("COLON\n"); return mc_colon;}
 "{" {rechercher(yytext, "AccoladeOuvrante", "", "", 3); col+=yyleng; printf("{ \n"); return mc_lbrace;}

@@ -93,8 +93,7 @@ condition:  expr | expr op_logic expr | condition "AND" condition | condition "O
 expr: expr mc_plus expr | expr mc_mult expr | div | expr mc_pow expr | mc_identifier | cst | mc_real  | mc_lparen expr mc_rparen ;
 div: mc_real mc_div mc_real {
     if ($3==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
-if(rechercherType($1)==0) printf("Erreur semantique: %s non declare a Ia ligne %d \n",$1,nb_ligne);
-if(rechercherType($3)==0) printf("Erreur semantique: %s non declare a la ligne %d \n",$3,nb_ligne);
+
 
 } ;
 
@@ -104,7 +103,7 @@ EXPR:
         
     } | mc_real {
         if ($1==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
-        if(rechercheType($1)==0) printf("Erreur semantique: %s non declare a Ia ligne %d \n",$1,nb_ligne);
+        
     }
     | mc_identifier
     | mc_lparen EXPR mc_rparen

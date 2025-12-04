@@ -287,14 +287,14 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 static yyconst short int yy_accept[105] =
     {   0,
         0,    0,   37,   35,   33,   34,   35,   35,   24,   27,
-       28,   29,   20,   35,   30,   18,   21,   16,   11,   35,
-       11,   17,   17,   17,   17,   17,   25,   26,   31,   17,
-       17,   17,   17,   17,   22,   23,   35,   33,   11,    0,
-       32,    0,    0,    0,   18,   19,   17,   17,   17,   17,
-       17,   17,   17,   17,    6,   17,   17,   15,   14,   17,
-       17,   17,   17,   17,   17,   17,    9,   17,   17,   15,
-       17,   17,    1,   17,   17,   10,    7,   17,   17,   13,
-       17,   17,    4,    5,    8,   17,   17,   12,   17,    0,
+       28,   29,   20,   35,   30,   18,   21,   17,   11,   35,
+       11,   16,   16,   16,   16,   16,   25,   26,   31,   16,
+       16,   16,   16,   16,   22,   23,   35,   33,   11,    0,
+       32,    0,    0,    0,   18,   19,   16,   16,   16,   16,
+       16,   16,   16,   16,    6,   16,   16,   15,   14,   16,
+       16,   16,   16,   16,   16,   16,    9,   16,   16,   15,
+       16,   16,    1,   16,   16,   10,    7,   16,   16,   13,
+       16,   16,    4,    5,    8,   16,   16,   12,   16,    0,
         0,    0,    0,    0,    0,    0,    3,    0,    0,    0,
 
         0,    0,    2,    0
@@ -768,13 +768,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 47 "lex.l"
-{col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
+#line 46 "lex.l"
+{ rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 48 "lex.l"
-{ rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
+{col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
@@ -784,7 +784,7 @@ YY_RULE_SETUP
 case 19:
 YY_RULE_SETUP
 #line 50 "lex.l"
-{rechercher(yytext, "AssignOp", "", "", 3); col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
+{ col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
