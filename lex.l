@@ -25,28 +25,28 @@ OPLOGIC (<=|>=|==|!=|>|<)
 %%
 "Main" {    rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("%s reconnu\n",yytext);return mc_main;}
 "Section Variables" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("SECTION Variables \n"); return mc_section_var;}
-"Section Code" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("SECTION Code \n"); return mc_section_code;}
+"Section Code" {rechercher(yytext, "Motcle", "", " mc_section_code", 2); col+=yyleng; printf("SECTION Code \n"); return mc_section_code;}
 "Start" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Start \n"); return mc_start;}
 "print" {  rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; return mc_print; }
 "if" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("if \n"); return mc_if;}
 "else" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("else \n"); return mc_else;}
-"while" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("while \n"); return mc_while;}
-"for" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("for \n"); return mc_for;}
-"Stop" { rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Stop \n");  return mc_stop; }
+"while" {rechercher(yytext, "while", "", "", 2); col+=yyleng; printf("while \n"); return mc_while;}
+"for" { rechercher(yytext, "for", "", "", 2); rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("for \n"); return mc_for;}
+"Stop" { rechercher(yytext, "Stop", "", "", 2);rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Stop \n");  return mc_stop; }
 
 {OPLOGIC} {    rechercher(yytext, "OpLogic", "", "", 3); col+=yyleng; printf("nbr_real\n"); return op_logic; }
  
 
 
-"Integer" {col+=yyleng; printf("KEYWORD\n"); return mc_int;}
-"Float" { yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
+"Integer" {rechercher(yytext, "int", "", "", 2);col+=yyleng; printf("KEYWORD\n"); return mc_int;}
+"Float" {  yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
 {real} {   yylval.str=strdup(yytext); col+=yyleng; printf("nbr_real\n"); return mc_real;}     
 {comment} { /* Ignorer les commentaires */ }
 
-{IDF} { rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
+{IDF} { rechercher(yytext, "idf", "str",  yytext, 1); yylval.str = strdup(yytext); col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
 
 ";" {col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
-{cst} { rechercher(yytext, "Nombre", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
+{cst} { rechercher(yytext, "cst", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
 ":="   { col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
 "," { rechercher(yytext, "Virgule", "", "", 3); col+=yyleng; printf("COMMA\n"); return mc_comma;}
 ":" { rechercher(yytext, "DeuxPoints", "", "", 3); col+=yyleng; printf("COLON\n"); return mc_colon;}

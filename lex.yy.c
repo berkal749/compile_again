@@ -704,7 +704,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 28 "lex.l"
-{rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("SECTION Code \n"); return mc_section_code;}
+{rechercher(yytext, "Motcle", "", " mc_section_code", 2); col+=yyleng; printf("SECTION Code \n"); return mc_section_code;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -729,17 +729,17 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 33 "lex.l"
-{rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("while \n"); return mc_while;}
+{rechercher(yytext, "while", "", "", 2); col+=yyleng; printf("while \n"); return mc_while;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 34 "lex.l"
-{rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("for \n"); return mc_for;}
+{ rechercher(yytext, "for", "", "", 2); rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("for \n"); return mc_for;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 35 "lex.l"
-{ rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Stop \n");  return mc_stop; }
+{ rechercher(yytext, "Stop", "", "", 2);rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Stop \n");  return mc_stop; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
@@ -749,12 +749,12 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 41 "lex.l"
-{col+=yyleng; printf("KEYWORD\n"); return mc_int;}
+{rechercher(yytext, "int", "", "", 2);col+=yyleng; printf("KEYWORD\n"); return mc_int;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 42 "lex.l"
-{ yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
+{  yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
@@ -769,7 +769,7 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 46 "lex.l"
-{ rechercher(yytext, "Motcle", "", "", 2);yylval.ent=atoi(yytext);col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
+{ rechercher(yytext, "idf", "str",  yytext, 1); yylval.str = strdup(yytext); col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
@@ -779,7 +779,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 49 "lex.l"
-{ rechercher(yytext, "Nombre", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
+{ rechercher(yytext, "cst", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP

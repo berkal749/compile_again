@@ -484,11 +484,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    43,    45,    47,    49,    52,    52,    59,
-      64,    72,    73,    76,    78,    82,    83,    83,    83,    83,
-      85,    85,    87,    89,    90,    91,    92,    92,    92,    92,
-      93,    93,    93,    93,    93,    93,    93,    93,    94,   101,
-     104,   108,   109,   110,   111,   112
+       0,    37,    37,    43,    45,    47,    49,    52,    52,    57,
+      62,    70,    71,    74,    76,    80,    81,    81,    81,    81,
+      83,    83,    85,    91,    92,    93,    94,    94,    94,    94,
+      95,    95,    95,    95,    95,    95,    95,    95,    96,   103,
+     106,   110,   111,   112,   113,   114
 };
 #endif
 
@@ -1467,23 +1467,12 @@ yyreduce:
     ;}
     break;
 
-  case 8:
-
-/* Line 1455 of yacc.c  */
-#line 52 "syn.y"
-    {
-        if(rechercher((yyvsp[(3) - (7)].str))==1){
-            printf("Erreur semantique: %s deja declare a la ligne %d \n",(yyvsp[(3) - (7)].str),nb_ligne);
-        }
-      ;}
-    break;
-
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 59 "syn.y"
+#line 57 "syn.y"
     {
-        if(rechercher((yyvsp[(1) - (1)].str))==1){
+        if(recherche((yyvsp[(1) - (1)].str))==0){
             printf("Erreur semantique: %s deja declare a la ligne %d \n",(yyvsp[(1) - (1)].str),nb_ligne);
         }
       ;}
@@ -1492,18 +1481,29 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 64 "syn.y"
+#line 62 "syn.y"
     {
-        if(rechercher((yyvsp[(3) - (3)].str))==1){
+        if(recherche((yyvsp[(3) - (3)].str))==1){
             printf("Erreur semantique: %s deja declare a la ligne %d \n",(yyvsp[(3) - (3)].str),nb_ligne);
         }
       ;}
     break;
 
+  case 22:
+
+/* Line 1455 of yacc.c  */
+#line 85 "syn.y"
+    {
+        if(recherche((yyvsp[(1) - (4)].str))==0){
+            printf("Erreur semantique: %s non declare a la ligne %d \n",(yyvsp[(1) - (4)].str),nb_ligne);
+        }
+    ;}
+    break;
+
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 94 "syn.y"
+#line 96 "syn.y"
     {
     if ((yyvsp[(3) - (3)].str)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
 
@@ -1514,7 +1514,7 @@ yyreduce:
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 101 "syn.y"
+#line 103 "syn.y"
     {
         if ((yyvsp[(1) - (1)].ent)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
         
@@ -1524,7 +1524,7 @@ yyreduce:
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 104 "syn.y"
+#line 106 "syn.y"
     {
         if ((yyvsp[(1) - (1)].str)==0) printf("Erreur semantique: Division par zero a la ligne %d\n",nb_ligne);
         
@@ -1746,7 +1746,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 116 "syn.y"
+#line 118 "syn.y"
 
 
 int main() {

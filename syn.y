@@ -49,20 +49,18 @@ DECLARATION_LIST:
     | DECLARATION_LIST DEC
 ;
 
-DEC: VAR_LIST mc_colon TYPE mc_semicolon | "T" mc_lbracket mc_identifier mc_rbracket  mc_colon TYPE mc_semicolon {
-        if(rechercher($3)==1){
-            printf("Erreur semantique: %s deja declare a la ligne %d \n",$3,nb_ligne);
-        }
-      };
+DEC: VAR_LIST mc_colon TYPE mc_semicolon | "T" mc_lbracket mc_identifier mc_rbracket  mc_colon TYPE mc_semicolon 
+        
+      
 
 VAR_LIST:
       mc_identifier{
-        if(rechercher($1)==1){
+        if(recherche($1)==0){
             printf("Erreur semantique: %s deja declare a la ligne %d \n",$1,nb_ligne);
         }
       }
     | VAR_LIST mc_comma mc_identifier {
-        if(rechercher($3)==1){
+        if(recherche($3)==1){
             printf("Erreur semantique: %s deja declare a la ligne %d \n",$3,nb_ligne);
         }
       }
@@ -84,7 +82,11 @@ INSTRUCTION:
 ;
 IF_STMT: mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace | mc_if mc_rparen string_literal mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace;
 
-ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon;
+ASSIGNMENT: mc_identifier mc_assign_op EXPR mc_semicolon{
+        if(recherche($1)==0){
+            printf("Erreur semantique: %s non declare a la ligne %d \n",$1,nb_ligne);
+        }
+    }
 
 PRINT_STMT: mc_print mc_lparen string_literal mc_rparen mc_semicolon;
 WHILE_STMT: mc_while mc_rparen condition mc_rparen mc_lbrace CODE mc_rbrace;

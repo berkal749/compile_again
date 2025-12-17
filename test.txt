@@ -1,13 +1,15 @@
 Main ACAD_B;
 Section Variables
 %% Déclaration
-x , y , z : Integer;
+x,y,z : Integer;
+total: Float;
 total: Float;
 
 Section Code
 Start
 {
 %%Partie instructions
+w := 5;
 x := 10;
 y := 3;
 z := x * y + 5;

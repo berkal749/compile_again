@@ -100,6 +100,16 @@ void inserer(char entite[], char code[],char type[],char val[], int y)
     }
 }
 
+int recherche(const char *name) {
+    TSNode *cur = TSHead;
+    while (cur) {
+        if (strcmp(cur->name, name) == 0)
+            return 1;
+        cur = cur->next;
+    }
+    return 0;
+}
+
 void rechercher(char entite[], char code[],char type[],char val[],int y)
 {
     switch(y)
@@ -117,7 +127,7 @@ void rechercher(char entite[], char code[],char type[],char val[],int y)
             }
             else
             {
-                printf("L'entite %s existe deja\n", entite);
+               // printf("L'entite %s existe deja\n", entite);
             }
             break;
             
@@ -135,7 +145,7 @@ void rechercher(char entite[], char code[],char type[],char val[],int y)
             }
             else
             {
-                printf("L'entite %s existe deja\n", entite);
+               // printf("L'entite %s existe deja\n", entite);
             }
             break;
             
@@ -153,7 +163,7 @@ void rechercher(char entite[], char code[],char type[],char val[],int y)
             }
             else
             {
-                printf("L'entite %s existe deja\n", entite);
+               // printf("L'entite %s existe deja\n", entite);
             }
             break;
         }
