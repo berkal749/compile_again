@@ -1,68 +1,86 @@
-/* ------ Analyseur lexicale pour : int x=3;  -------------*/
 %{
-    #include<stdio.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
     #include "syn.tab.h"
     #include "TS.h"
-    
-    // Partie : Déclarations en C
-       int nb_ligne = 1;
-int col = 1;
 
+    int nb_ligne = 1;
+    int col = 1;
 %}
-/* -- Partie : Expressions régulières -- */
-lettre [a-zA-Z]
-real [+-]?[0-9]+\.[0-9]+
-chiffre [0-9]
-IDF {lettre}({lettre}|{chiffre}|_)*   
 
-cst {chiffre}+
-string \"([^\"\\]|\\.)*\"
-PRINT print[ \t]*\([ \t]*{string}[ \t]*\)[ \t]*;
-comment ^%%.*    
-OPLOGIC (<=|>=|==|!=|>|<) 
+/* -------- REGEX -------- */
+lettre   [a-zA-Z]
+chiffre  [0-9]
+IDF      {lettre}({lettre}|{chiffre}|_)*
+cst      {chiffre}+
+real     [+-]?{chiffre}+\.{chiffre}+
+string   \"([^\"\\]|\\.)*\"
+OPLOGIC  (<=|>=|==|!=|>|<)
 
-/* -- Partie : Règles de traduction -- */
 %%
-"Main" {    rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("%s reconnu\n",yytext);return mc_main;}
-"Section Variables" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("SECTION Variables \n"); return mc_section_var;}
-"Section Code" {rechercher(yytext, "Motcle", "", " mc_section_code", 2); col+=yyleng; printf("SECTION Code \n"); return mc_section_code;}
-"Start" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Start \n"); return mc_start;}
-"print" {  rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; return mc_print; }
-"if" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("if \n"); return mc_if;}
-"else" {rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("else \n"); return mc_else;}
-"while" {rechercher(yytext, "while", "", "", 2); col+=yyleng; printf("while \n"); return mc_while;}
-"for" { rechercher(yytext, "for", "", "", 2); rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("for \n"); return mc_for;}
-"Stop" { rechercher(yytext, "Stop", "", "", 2);rechercher(yytext, "Motcle", "", "", 2); col+=yyleng; printf("Stop \n");  return mc_stop; }
+"Main"                { rechercher(yytext,"MotCle","MAIN","",2); return mc_main; }
+"Section Variables"   { rechercher(yytext,"MotCle","SV","",2); return mc_section_var; }
+"Section Code"        { rechercher(yytext,"MotCle","SC","",2); return mc_section_code; }
+"Start"               { rechercher(yytext,"MotCle","START","",2); return mc_start; }
+"Stop"                { rechercher(yytext,"MotCle","STOP","",2); return mc_stop; }
 
-{OPLOGIC} {    rechercher(yytext, "OpLogic", "", "", 3); col+=yyleng; printf("nbr_real\n"); return op_logic; }
- 
+"Integer"             { rechercher(yytext,"MotCle","INT","",2); return mc_int; }
+"Float"               { rechercher(yytext,"MotCle","FLOAT","",2); return mc_flt; }
+
+"if"                  { rechercher(yytext,"MotCle","IF","",2); return mc_if; }
+"else"                { rechercher(yytext,"MotCle","ELSE","",2); return mc_else; }
+"while"               { rechercher(yytext,"MotCle","WHILE","",2); return mc_while; }
+"for"                 { rechercher(yytext,"MotCle","FOR","",2); return mc_for; }
+"print"               { rechercher(yytext,"MotCle","PRINT","",2); return mc_print; }
+
+{real} {
+    rechercher(yytext,"CST","FLOAT",yytext,1);
+    yylval.str = strdup(yytext);
+    return mc_real;
+}
+
+{cst} {
+    rechercher(yytext,"CST","INTEGER",yytext,1);
+    yylval.ent = atoi(yytext);
+    return mc_number;
+}
+
+{IDF} {
+   
+    yylval.str = strdup(yytext);
+    return mc_identifier;
+}
+
+{string} {
+    yylval.string_literal = strdup(yytext);
+    return string_literal;
+}
+
+"%%"[ \t]*.*  {  }
 
 
-"Integer" {rechercher(yytext, "int", "", "", 2);col+=yyleng; printf("KEYWORD\n"); return mc_int;}
-"Float" {  yylval.str=strdup(yytext); col+=yyleng; printf("KEYWORD\n"); return mc_flt;}
-{real} {   yylval.str=strdup(yytext); col+=yyleng; printf("nbr_real\n"); return mc_real;}     
-{comment} { /* Ignorer les commentaires */ }
+{OPLOGIC}   { rechercher(yytext,"OP","LOGIC","",3); return op_logic; }
 
-{IDF} { rechercher(yytext, "idf", "str",  yytext, 1); yylval.str = strdup(yytext); col+=yyleng; printf ("IDENTIFIER\n"); return mc_identifier;}
+":="    { rechercher(":=","OP","ASSIGN","",3); return mc_assign_op; }
+";"     { rechercher(";","SEP","SC","",3); return mc_semicolon; }
+","     { rechercher(",","SEP","COMMA","",3); return mc_comma; }
+":"     { rechercher(":","SEP","COLON","",3); return mc_colon; }
 
-";" {col+=yyleng; printf ("SEMICOLON\n"); return mc_semicolon;}
-{cst} { rechercher(yytext, "cst", "", "", 1); yylval.ent=atoi(yytext); col+=yyleng; printf("NUMBER\n"); return mc_number;}
-":="   { col+=yyleng; printf ("ASSIGN_OP\n"); return mc_assign_op;}
-"," { rechercher(yytext, "Virgule", "", "", 3); col+=yyleng; printf("COMMA\n"); return mc_comma;}
-":" { rechercher(yytext, "DeuxPoints", "", "", 3); col+=yyleng; printf("COLON\n"); return mc_colon;}
-"{" {rechercher(yytext, "AccoladeOuvrante", "", "", 3); col+=yyleng; printf("{ \n"); return mc_lbrace;}
-"}" {rechercher(yytext, "AccoladeFermante", "", "", 3); col+=yyleng; printf("} \n"); return mc_rbrace;}
-"(" {rechercher(yytext, "ParentheseOuvrante", "", "", 3); col+=yyleng; printf("( \n"); return mc_lparen;}
-"[" {rechercher(yytext, "CrochetOuvrant", "", "", 3); col+=yyleng; printf("[ \n"); return mc_lbracket;}
-"]" {rechercher(yytext, "CrochetFermant", "", "", 3); col+=yyleng; printf("] \n"); return mc_rbracket;}
-")" {rechercher(yytext, "ParentheseFermante", "", "", 3); col+=yyleng; printf(") \n"); return mc_rparen;}
-"*" {rechercher(yytext, "Mult", "", "", 3); col+=yyleng; printf("* \n"); return mc_mult;}
-"+" {rechercher(yytext, "Plus", "", "", 3); col+=yyleng; printf("+ \n"); return mc_plus;}
-"/" {rechercher(yytext, "Div", "", "", 3); col+=yyleng; printf("/ \n"); return mc_div;}
-"^" {rechercher(yytext, "Pow", "", "", 3); col+=yyleng; printf("^ \n"); return mc_pow;}
-{string} { yylval.string_literal = strdup(yytext); return string_literal; }
-[ \t]+    { col += yyleng; /* skip spaces */ }
-\n        { nb_ligne++; col=1; }
+"("     { return mc_lparen; }
+")"     { return mc_rparen; }
+"{"     { return mc_lbrace; }
+"}"     { return mc_rbrace; }
+"["     { return mc_lbracket; }
+"]"     { return mc_rbracket; }
 
-. {printf("Erreur lexicale a la ligne %d \n",nb_ligne) ;}
+"+"     { return mc_plus; }
+"*"     { return mc_mult; }
+"/"     { return mc_div; }
+"^"     { return mc_pow; }
+
+[ \t]+  { col += yyleng; }
+\n      { nb_ligne++; col = 1; }
+
+. { printf("Erreur lexicale ligne %d\n", nb_ligne); }
 %%

@@ -39,41 +39,37 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     string_literal = 258,
-     mc_main = 259,
-     mc_int = 260,
-     mc_flt = 261,
-     cst = 262,
-     mc_real = 263,
-     err = 264,
-     mc_section_var = 265,
-     mc_section_code = 266,
-     mc_start = 267,
-     mc_print = 268,
-     mc_number = 269,
-     mc_identifier = 270,
-     mc_assign_op = 271,
-     mc_semicolon = 272,
-     mc_comma = 273,
-     mc_colon = 274,
-     mc_lbrace = 275,
-     mc_rbrace = 276,
-     mc_lparen = 277,
-     mc_rparen = 278,
-     mc_mult = 279,
-     mc_plus = 280,
-     mc_div = 281,
-     mc_stop = 282,
-     mc_if = 283,
-     mc_else = 284,
-     op_logic = 285,
-     mc_while = 286,
-     mc_for = 287,
-     mc_pow = 288,
-     mc_lbracket = 289,
-     mc_rbracket = 290,
-     OR = 291,
-     AND = 292
+     mc_main = 258,
+     mc_section_var = 259,
+     mc_section_code = 260,
+     mc_start = 261,
+     mc_stop = 262,
+     mc_int = 263,
+     mc_flt = 264,
+     mc_if = 265,
+     mc_else = 266,
+     mc_while = 267,
+     mc_for = 268,
+     mc_print = 269,
+     mc_lbrace = 270,
+     mc_rbrace = 271,
+     mc_lparen = 272,
+     mc_rparen = 273,
+     mc_lbracket = 274,
+     mc_rbracket = 275,
+     mc_plus = 276,
+     mc_mult = 277,
+     mc_div = 278,
+     mc_pow = 279,
+     mc_assign_op = 280,
+     mc_semicolon = 281,
+     mc_comma = 282,
+     mc_colon = 283,
+     op_logic = 284,
+     mc_identifier = 285,
+     mc_real = 286,
+     mc_number = 287,
+     string_literal = 288
    };
 #endif
 
@@ -84,18 +80,16 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 15 "syn.y"
+#line 12 "syn.y"
 
+    char* str;
+    int ent;
     char* string_literal;
-    
-    char* str ;
-    int ent ;
-    
 
 
 
 /* Line 1676 of yacc.c  */
-#line 99 "syn.tab.h"
+#line 93 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
