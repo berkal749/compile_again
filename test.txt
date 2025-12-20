@@ -1,24 +1,49 @@
 Main ACAD_B;
 Section Variables
-%% Déclaration
 x,y,z : Integer;
 total: Float;
 total: Float;
+arr[10] : Integer;
 
 Section Code
 Start
 {
-%%Partie instructions
 w := 5/0;
 x := 10;
 y := 3;
 z := x * y + 5;
-total := (x + y + z) / 0 ;
+total := (x + y + z) / 0;
+
+arr[0] := 100;
+arr[5] := arr[0] + 20;
+x := arr[5];
+
 while (x > 0)
 {
     x := x - 1;
 }
+
+Do
+{
+    y := y + 1;
+}
+while (y < 10);
+
+for i from 1 to 5 step 1
+{
+    z := z + i;
+}
+
+if (y == 10)
+{
+    print("10");
+}
+else
+{
+    print("no");
+}
+EndIf;
+
 print("fin de calcul");
-%% Fin du calcul
 }
 Stop

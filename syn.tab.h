@@ -48,29 +48,37 @@
      mc_flt = 264,
      mc_if = 265,
      mc_else = 266,
-     mc_while = 267,
-     mc_for = 268,
-     mc_print = 269,
-     mc_lbrace = 270,
-     mc_rbrace = 271,
-     mc_lparen = 272,
-     mc_rparen = 273,
-     mc_lbracket = 274,
-     mc_rbracket = 275,
-     mc_plus = 276,
-     mc_mult = 277,
-     mc_div = 278,
-     mc_pow = 279,
-     mc_assign_op = 280,
-     mc_semicolon = 281,
-     mc_comma = 282,
-     mc_colon = 283,
-     op_logic = 284,
+     mc_endif = 267,
+     mc_while = 268,
+     mc_do = 269,
+     mc_for = 270,
+     mc_print = 271,
+     mc_from = 272,
+     mc_to = 273,
+     mc_step = 274,
+     mc_and = 275,
+     mc_or = 276,
+     mc_not = 277,
+     mc_lbrace = 278,
+     mc_rbrace = 279,
+     mc_lparen = 280,
+     mc_rparen = 281,
+     mc_lbracket = 282,
+     mc_rbracket = 283,
+     mc_plus = 284,
      mc_minus = 285,
-     mc_identifier = 286,
-     mc_real = 287,
-     mc_number = 288,
-     string_literal = 289
+     mc_mult = 286,
+     mc_div = 287,
+     mc_pow = 288,
+     mc_assign_op = 289,
+     mc_semicolon = 290,
+     mc_comma = 291,
+     mc_colon = 292,
+     op_logic = 293,
+     mc_identifier = 294,
+     mc_real = 295,
+     mc_number = 296,
+     string_literal = 297
    };
 #endif
 
@@ -90,7 +98,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 94 "syn.tab.h"
+#line 102 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

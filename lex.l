@@ -9,7 +9,6 @@
     int col = 1;
 %}
 
-
 lettre   [a-zA-Z]
 chiffre  [0-9]
 IDF      {lettre}({lettre}|{chiffre}|_)*
@@ -30,9 +29,18 @@ OPLOGIC  (<=|>=|==|!=|>|<)
 
 "if"                  { rechercher(yytext,"MotCle","IF","",2); return mc_if; }
 "else"                { rechercher(yytext,"MotCle","ELSE","",2); return mc_else; }
+"EndIf"               { rechercher(yytext,"MotCle","ENDIF","",2); return mc_endif; }
 "while"               { rechercher(yytext,"MotCle","WHILE","",2); return mc_while; }
+"Do"                  { rechercher(yytext,"MotCle","DO","",2); return mc_do; }
 "for"                 { rechercher(yytext,"MotCle","FOR","",2); return mc_for; }
+"from"                { rechercher(yytext,"MotCle","FROM","",2); return mc_from; }
+"to"                  { rechercher(yytext,"MotCle","TO","",2); return mc_to; }
+"step"                { rechercher(yytext,"MotCle","STEP","",2); return mc_step; }
 "print"               { rechercher(yytext,"MotCle","PRINT","",2); return mc_print; }
+
+"AND"                 { rechercher(yytext,"OP","AND","",3); return mc_and; }
+"OR"                  { rechercher(yytext,"OP","OR","",3); return mc_or; }
+"!"                   { rechercher(yytext,"OP","NOT","",3); return mc_not; }
 
 {real} {
     rechercher(yytext,"CST","FLOAT",yytext,1);
@@ -47,7 +55,6 @@ OPLOGIC  (<=|>=|==|!=|>|<)
 }
 
 {IDF} {
-   
     yylval.str = strdup(yytext);
     return mc_identifier;
 }
@@ -57,10 +64,7 @@ OPLOGIC  (<=|>=|==|!=|>|<)
     return string_literal;
 }
 
-"%%"[ \t]*.*  {
-
-  }
-
+"%%"[ \t]*.*  {  }
 
 {OPLOGIC}   { rechercher(yytext,"OP","LOGIC","",3); return op_logic; }
 
@@ -77,7 +81,7 @@ OPLOGIC  (<=|>=|==|!=|>|<)
 "]"     { return mc_rbracket; }
 
 "+"     { return mc_plus; }
-"-"     { return mc_minus; } 
+"-"     { return mc_minus; }
 "*"     { return mc_mult; }
 "/"     { return mc_div; }
 "^"     { return mc_pow; }
