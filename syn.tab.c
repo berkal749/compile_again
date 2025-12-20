@@ -485,11 +485,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    36,    38,    39,    43,    44,    53,    59,
-      68,    69,    72,    74,    74,    78,    79,    80,    81,    82,
-      83,    87,    91,    97,   104,   108,   109,   113,   117,   121,
-     128,   129,   130,   131,   132,   136,   137,   138,   142,   146,
-     147,   148,   149,   150
+       0,    31,    31,    36,    38,    38,    41,    42,    50,    56,
+      64,    65,    68,    70,    70,    73,    73,    73,    73,    73,
+      73,    77,    81,    87,    93,    96,    97,   100,   103,   106,
+     112,   112,   112,   112,   113,   116,   116,   116,   120,   124,
+     124,   124,   124,   124
 };
 #endif
 
@@ -1482,7 +1482,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 31 "syn.y"
     {
-    printf("=== Syntaxe correcte ===\n");
+    printf("Syntaxe correcte \n");
     YYACCEPT;
 ;}
     break;
@@ -1490,10 +1490,10 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 44 "syn.y"
+#line 42 "syn.y"
     {
         if (recherche((yyvsp[(1) - (7)].str)))
-            printf("Erreur semantique: tableau %s deja declare ligne %d\n", (yyvsp[(1) - (7)].str), nb_ligne);
+            printf("Erreur semantique: %s deja declare ligne %d\n", (yyvsp[(1) - (7)].str), nb_ligne);
         else
             inserer((yyvsp[(1) - (7)].str), "TAB", "", "", 1);
     ;}
@@ -1502,7 +1502,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 53 "syn.y"
+#line 50 "syn.y"
     {
         if (recherche((yyvsp[(1) - (1)].str)))
             printf("Erreur semantique: %s deja declare ligne %d\n",(yyvsp[(1) - (1)].str),nb_ligne);
@@ -1514,7 +1514,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 59 "syn.y"
+#line 56 "syn.y"
     {
         if (recherche((yyvsp[(3) - (3)].str)))
             printf("Erreur semantique: %s deja declare ligne %d\n",(yyvsp[(3) - (3)].str),nb_ligne);
@@ -1526,21 +1526,21 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 68 "syn.y"
+#line 64 "syn.y"
     { affecterType("INTEGER"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 69 "syn.y"
+#line 65 "syn.y"
     { affecterType("FLOAT"); ;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 87 "syn.y"
+#line 77 "syn.y"
     {
         if (!recherche((yyvsp[(1) - (4)].str)))
             printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(1) - (4)].str),nb_ligne);
@@ -1550,7 +1550,7 @@ yyreduce:
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 91 "syn.y"
+#line 81 "syn.y"
     {
         if (!recherche((yyvsp[(1) - (6)].str)))
             printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(1) - (6)].str),nb_ligne);
@@ -1562,17 +1562,17 @@ yyreduce:
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 97 "syn.y"
+#line 87 "syn.y"
     {
         if (!recherche((yyvsp[(1) - (7)].str)))
-            printf("Erreur semantique: tableau %s non declare ligne %d\n",(yyvsp[(1) - (7)].str),nb_ligne);
+            printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(1) - (7)].str),nb_ligne);
     ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 121 "syn.y"
+#line 106 "syn.y"
     {
         if (!recherche((yyvsp[(2) - (11)].str)))
             printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(2) - (11)].str),nb_ligne);
@@ -1582,7 +1582,7 @@ yyreduce:
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 138 "syn.y"
+#line 116 "syn.y"
     {
         if (!recherche((yyvsp[(1) - (1)].str)))
             printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(1) - (1)].str),nb_ligne);
@@ -1592,10 +1592,10 @@ yyreduce:
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 142 "syn.y"
+#line 120 "syn.y"
     {
         if (!recherche((yyvsp[(1) - (4)].str)))
-            printf("Erreur semantique: tableau %s non declare ligne %d\n",(yyvsp[(1) - (4)].str),nb_ligne);
+            printf("Erreur semantique: %s non declare ligne %d\n",(yyvsp[(1) - (4)].str),nb_ligne);
     ;}
     break;
 
@@ -1814,7 +1814,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 153 "syn.y"
+#line 126 "syn.y"
 
 int yyerror(char *msg) {
     printf("Erreur syntaxique ligne %d\n", nb_ligne);
