@@ -67,11 +67,9 @@ TYPE: mc_int  { affecterType("INTEGER"); }
 
 SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace mc_stop;
 
-CODE:  | CODE INSTRUCTION
-;
+CODE:  | CODE INSTRUCTION ;
 
-INSTRUCTION:  ASSIGNMENT | PRINT_STMT| IF_STMT | WHILE_STMT | DO_WHILE_STMT | FOR_STMT
-;
+INSTRUCTION:  ASSIGNMENT | PRINT_STMT| IF_STMT | WHILE_STMT | DO_WHILE_STMT | FOR_STMT ;
 
 ASSIGNMENT:
     mc_identifier mc_assign_op EXPR mc_semicolon {
@@ -90,18 +88,14 @@ ASSIGNMENT:
     }
 ;
 
-PRINT_STMT:  mc_print mc_lparen string_literal mc_rparen mc_semicolon
-;
+PRINT_STMT:  mc_print mc_lparen string_literal mc_rparen mc_semicolon ;
 
 IF_STMT:  mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace mc_endif mc_semicolon
-    | mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_endif mc_semicolon
-;
+    | mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_endif mc_semicolon ;
 
-WHILE_STMT:  mc_while mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace
-;
+WHILE_STMT:  mc_while mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace ;
 
-DO_WHILE_STMT:  mc_do mc_lbrace CODE mc_rbrace mc_while mc_lparen CONDITION mc_rparen mc_semicolon
-;
+DO_WHILE_STMT:  mc_do mc_lbrace CODE mc_rbrace mc_while mc_lparen CONDITION mc_rparen mc_semicolon ;
 
 FOR_STMT:  mc_for mc_identifier mc_from mc_number mc_to mc_number mc_step mc_number mc_lbrace CODE mc_rbrace {
         if (!recherche($2))
@@ -110,8 +104,7 @@ FOR_STMT:  mc_for mc_identifier mc_from mc_number mc_to mc_number mc_step mc_num
 ;
 
 CONDITION:  EXPR op_logic EXPR | mc_lparen CONDITION mc_rparen | CONDITION mc_and CONDITION | CONDITION mc_or CONDITION
-    | mc_not CONDITION
-;
+    | mc_not CONDITION ;
 
 EXPR: mc_number | mc_real  | mc_identifier {
         if (!recherche($1))
