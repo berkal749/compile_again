@@ -4,15 +4,12 @@ SMNode *MHead = NULL;
 SMNode *SHead = NULL;
 
 void initialization() {
-    // Free the existing TS linked list
     TSNode *currentTS = TSHead;
     while (currentTS != NULL) {
         TSNode *temp = currentTS;
         currentTS = currentTS->next;
         free(temp);
     }
-    
-    // Free the existing M linked list
     SMNode *currentM = MHead;
     while (currentM != NULL) {
         SMNode *temp = currentM;
@@ -20,7 +17,7 @@ void initialization() {
         free(temp);
     }
     
-    // Free the existing S linked list
+    
     SMNode *currentS = SHead;
     while (currentS != NULL) {
         SMNode *temp = currentS;
@@ -28,7 +25,7 @@ void initialization() {
         free(temp);
     }
     
-    // Reset all heads to NULL
+    
     TSHead = NULL;
     MHead = NULL;
     SHead = NULL;
@@ -133,15 +130,12 @@ void rechercher(char entite[], char code[],char type[],char val[],int y)
             {
                // printf("L'entite %s existe deja\n", entite);
             }
-            break;
-            
-        }
+            break; }
         case 2: {
             SMNode *current = MHead;
             while((current != NULL)&&(strcmp(current->name, entite) != 0))
             {
-                current = current->next;
-            }
+                current = current->next; }
             
             if(current == NULL || strcmp(current->name, entite) != 0)
             {
@@ -158,17 +152,15 @@ void rechercher(char entite[], char code[],char type[],char val[],int y)
             SMNode *current = SHead;
             while((current != NULL)&&(strcmp(current->name, entite) != 0))
             {
-                current = current->next;
-            }
+                current = current->next;  }
             
             if(current == NULL || strcmp(current->name, entite) != 0)
             {
-                inserer(entite, code, type, val, 3);
-            }
+                inserer(entite, code, type, val, 3); }
             else
             {
                // printf("L'entite %s existe deja\n", entite);
-            }
+                 }
             break;
         }
     }

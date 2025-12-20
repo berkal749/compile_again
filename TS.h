@@ -20,12 +20,12 @@ typedef struct SMNode {
     struct SMNode* next;
 } SMNode;
 
-/* GLOBAL TABLES */
+
 extern TSNode *TSHead;
 extern SMNode *MHead;
 extern SMNode *SHead;
 
-/* FUNCTION PROTOTYPES */
+
 void initialization();
 void inserer(char entite[], char code[], char type[], char val[], int y);
 int  recherche(const char *name);

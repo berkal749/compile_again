@@ -9,7 +9,7 @@
     int col = 1;
 %}
 
-/* -------- REGEX -------- */
+
 lettre   [a-zA-Z]
 chiffre  [0-9]
 IDF      {lettre}({lettre}|{chiffre}|_)*
@@ -41,7 +41,7 @@ OPLOGIC  (<=|>=|==|!=|>|<)
 }
 
 {cst} {
-    rechercher(yytext,"CST","INTEGER",yytext,1);
+    rechercher(yytext,"CST","INTEGER",yytext,1);    
     yylval.ent = atoi(yytext);
     return mc_number;
 }
@@ -57,7 +57,9 @@ OPLOGIC  (<=|>=|==|!=|>|<)
     return string_literal;
 }
 
-"%%"[ \t]*.*  {  }
+"%%"[ \t]*.*  {
+
+  }
 
 
 {OPLOGIC}   { rechercher(yytext,"OP","LOGIC","",3); return op_logic; }

@@ -448,8 +448,7 @@ char *yytext;
 
     int nb_ligne = 1;
     int col = 1;
-/* -------- REGEX -------- */
-#line 453 "lex.yy.c"
+#line 452 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -602,7 +601,7 @@ YY_DECL
 
 #line 21 "lex.l"
 
-#line 606 "lex.yy.c"
+#line 605 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -758,7 +757,7 @@ case 14:
 YY_RULE_SETUP
 #line 43 "lex.l"
 {
-    rechercher(yytext,"CST","INTEGER",yytext,1);
+    rechercher(yytext,"CST","INTEGER",yytext,1);    
     yylval.ent = atoi(yytext);
     return mc_number;
 }
@@ -783,104 +782,106 @@ YY_RULE_SETUP
 case 17:
 YY_RULE_SETUP
 #line 60 "lex.l"
-{  }
+{
+
+  }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 63 "lex.l"
+#line 65 "lex.l"
 { rechercher(yytext,"OP","LOGIC","",3); return op_logic; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 65 "lex.l"
+#line 67 "lex.l"
 { rechercher(":=","OP","ASSIGN","",3); return mc_assign_op; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 66 "lex.l"
+#line 68 "lex.l"
 { rechercher(";","SEP","SC","",3); return mc_semicolon; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 67 "lex.l"
+#line 69 "lex.l"
 { rechercher(",","SEP","COMMA","",3); return mc_comma; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 68 "lex.l"
+#line 70 "lex.l"
 { rechercher(":","SEP","COLON","",3); return mc_colon; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 70 "lex.l"
+#line 72 "lex.l"
 { return mc_lparen; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 71 "lex.l"
+#line 73 "lex.l"
 { return mc_rparen; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 72 "lex.l"
+#line 74 "lex.l"
 { return mc_lbrace; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 75 "lex.l"
 { return mc_rbrace; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 74 "lex.l"
+#line 76 "lex.l"
 { return mc_lbracket; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 75 "lex.l"
+#line 77 "lex.l"
 { return mc_rbracket; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 77 "lex.l"
+#line 79 "lex.l"
 { return mc_plus; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 78 "lex.l"
+#line 80 "lex.l"
 { return mc_mult; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 79 "lex.l"
+#line 81 "lex.l"
 { return mc_div; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 80 "lex.l"
+#line 82 "lex.l"
 { return mc_pow; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 82 "lex.l"
+#line 84 "lex.l"
 { col += yyleng; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 85 "lex.l"
 { nb_ligne++; col = 1; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 85 "lex.l"
+#line 87 "lex.l"
 { printf("Erreur lexicale ligne %d\n", nb_ligne); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 86 "lex.l"
+#line 88 "lex.l"
 ECHO;
 	YY_BREAK
-#line 884 "lex.yy.c"
+#line 885 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1766,5 +1767,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 86 "lex.l"
+#line 88 "lex.l"
 

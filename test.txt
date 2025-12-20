@@ -9,7 +9,7 @@ Section Code
 Start
 {
 %%Partie instructions
-w := 5;
+w := 5/0;
 x := 10;
 y := 3;
 z := x * y + 5;

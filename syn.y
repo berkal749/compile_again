@@ -71,7 +71,7 @@ TYPE:
 SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace mc_stop;
 
 CODE:
-      
+      /* empty */
     | CODE INSTRUCTION
 ;
 
@@ -84,6 +84,12 @@ ASSIGNMENT:
     mc_identifier mc_assign_op EXPR mc_semicolon {
         if (!recherche($1))
             printf("Erreur semantique: %s non declare ligne %d\n",$1,nb_ligne);
+    }
+    | mc_identifier mc_assign_op EXPR mc_div mc_number mc_semicolon {
+        if (!recherche($1))
+            printf("Erreur semantique: %s non declare ligne %d\n",$1,nb_ligne);
+        if ($5 == 0)
+            printf("Erreur semantique: division par zero ligne %d\n", nb_ligne);
     }
 ;
 
@@ -98,10 +104,6 @@ EXPR:
     | EXPR mc_plus EXPR
     | EXPR mc_mult EXPR
     | EXPR mc_div EXPR
-    | EXPR mc_div mc_number {
-        if ($3 == 0)
-            printf("Erreur semantique: division par zero ligne %d\n", nb_ligne);
-    }
     | mc_lparen EXPR mc_rparen
 ;
 
