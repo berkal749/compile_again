@@ -49,8 +49,7 @@ DEC:
     }
 ;
 
-VAR_LIST:
-      mc_identifier {
+VAR_LIST: mc_identifier {
         if (recherche($1))
             printf("Erreur semantique: %s deja declare ligne %d\n",$1,nb_ligne);
         else
@@ -64,8 +63,7 @@ VAR_LIST:
       }
 ;
 
-TYPE:
-      mc_int  { affecterType("INTEGER"); }
+TYPE: mc_int  { affecterType("INTEGER"); }
     | mc_flt  { affecterType("FLOAT"); }
 ;
 
@@ -74,10 +72,9 @@ SC: mc_section_code mc_start mc_lbrace CODE mc_rbrace mc_stop;
 CODE:  | CODE INSTRUCTION
 ;
 
-INSTRUCTION:
-      ASSIGNMENT
+INSTRUCTION:  ASSIGNMENT
     | PRINT_STMT
-    | IF_STMT
+  | IF_STMT
     | WHILE_STMT
     | DO_WHILE_STMT
     | FOR_STMT
@@ -88,52 +85,45 @@ ASSIGNMENT:
         if (!recherche($1))
             printf("Erreur semantique: %s non declare ligne %d\n",$1,nb_ligne);
     }
-    | mc_identifier mc_assign_op EXPR mc_div mc_number mc_semicolon {
+ | mc_identifier mc_assign_op EXPR mc_div mc_number mc_semicolon {
         if (!recherche($1))
             printf("Erreur semantique: %s non declare ligne %d\n",$1,nb_ligne);
         if ($5 == 0)
             printf("Erreur semantique: division par zero ligne %d\n", nb_ligne);
     }
-    | mc_identifier mc_lbracket EXPR mc_rbracket mc_assign_op EXPR mc_semicolon {
+      | mc_identifier mc_lbracket EXPR mc_rbracket mc_assign_op EXPR mc_semicolon {
         if (!recherche($1))
             printf("Erreur semantique: tableau %s non declare ligne %d\n",$1,nb_ligne);
     }
 ;
 
-PRINT_STMT:
-    mc_print mc_lparen string_literal mc_rparen mc_semicolon
+PRINT_STMT:  mc_print mc_lparen string_literal mc_rparen mc_semicolon
 ;
 
-IF_STMT:
-    mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace mc_endif mc_semicolon
+IF_STMT:  mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_else mc_lbrace CODE mc_rbrace mc_endif mc_semicolon
     | mc_if mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace mc_endif mc_semicolon
 ;
 
-WHILE_STMT:
-    mc_while mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace
+WHILE_STMT:  mc_while mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace
 ;
 
-DO_WHILE_STMT:
-    mc_do mc_lbrace CODE mc_rbrace mc_while mc_lparen CONDITION mc_rparen mc_semicolon
+DO_WHILE_STMT:  mc_do mc_lbrace CODE mc_rbrace mc_while mc_lparen CONDITION mc_rparen mc_semicolon
 ;
 
-FOR_STMT:
-    mc_for mc_identifier mc_from mc_number mc_to mc_number mc_step mc_number mc_lbrace CODE mc_rbrace {
+FOR_STMT:  mc_for mc_identifier mc_from mc_number mc_to mc_number mc_step mc_number mc_lbrace CODE mc_rbrace {
         if (!recherche($2))
             printf("Erreur semantique: %s non declare ligne %d\n",$2,nb_ligne);
     }
 ;
 
-CONDITION:
-      EXPR op_logic EXPR
+CONDITION:  EXPR op_logic EXPR
     | mc_lparen CONDITION mc_rparen
     | CONDITION mc_and CONDITION
     | CONDITION mc_or CONDITION
     | mc_not CONDITION
 ;
 
-EXPR:
-      mc_number
+EXPR: mc_number
     | mc_real
     | mc_identifier {
         if (!recherche($1))
