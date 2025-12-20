@@ -34,7 +34,7 @@ S: mc_main mc_identifier mc_semicolon SV SC {
 SV: mc_section_var DECLARATION_LIST;
 
 DECLARATION_LIST:
-      /* empty */
+      
     | DECLARATION_LIST DEC
 ;
 
