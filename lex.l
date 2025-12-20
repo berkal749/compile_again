@@ -77,6 +77,7 @@ OPLOGIC  (<=|>=|==|!=|>|<)
 "]"     { return mc_rbracket; }
 
 "+"     { return mc_plus; }
+"-"     { return mc_minus; } 
 "*"     { return mc_mult; }
 "/"     { return mc_div; }
 "^"     { return mc_pow; }

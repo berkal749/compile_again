@@ -282,14 +282,14 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 36
-#define YY_END_OF_BUFFER 37
+#define YY_NUM_RULES 37
+#define YY_END_OF_BUFFER 38
 static yyconst short int yy_accept[106] =
     {   0,
-        0,    0,   37,   35,   33,   34,   35,   35,   35,   23,
-       24,   30,   29,   21,   35,   31,   14,   22,   20,   18,
-       35,   18,   15,   15,   15,   15,   15,   27,   28,   32,
-       15,   15,   15,   15,   15,   25,   26,   33,   18,    0,
+        0,    0,   38,   36,   34,   35,   36,   36,   36,   23,
+       24,   31,   29,   21,   30,   32,   14,   22,   20,   18,
+       36,   18,   15,   15,   15,   15,   15,   27,   28,   33,
+       15,   15,   15,   15,   15,   25,   26,   34,   18,    0,
        16,    0,   17,    0,    0,   14,   19,   15,   15,   15,
        15,   15,   15,   15,   15,    8,   15,   15,   17,   17,
        13,   15,   15,   15,   15,   15,   15,   15,   11,   15,
@@ -849,39 +849,44 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 80 "lex.l"
-{ return mc_mult; }
+{ return mc_minus; } 
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 81 "lex.l"
-{ return mc_div; }
+{ return mc_mult; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 82 "lex.l"
-{ return mc_pow; }
+{ return mc_div; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 84 "lex.l"
-{ col += yyleng; }
+#line 83 "lex.l"
+{ return mc_pow; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 85 "lex.l"
-{ nb_ligne++; col = 1; }
+{ col += yyleng; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 87 "lex.l"
-{ printf("Erreur lexicale ligne %d\n", nb_ligne); }
+#line 86 "lex.l"
+{ nb_ligne++; col = 1; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 88 "lex.l"
+{ printf("Erreur lexicale ligne %d\n", nb_ligne); }
+	YY_BREAK
+case 37:
+YY_RULE_SETUP
+#line 89 "lex.l"
 ECHO;
 	YY_BREAK
-#line 885 "lex.yy.c"
+#line 890 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1767,5 +1772,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 88 "lex.l"
+#line 89 "lex.l"
 

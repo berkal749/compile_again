@@ -14,6 +14,10 @@ x := 10;
 y := 3;
 z := x * y + 5;
 total := (x + y + z) / 0 ;
+while (x > 0)
+{
+    x := x - 1;
+}
 print("fin de calcul");
 %% Fin du calcul
 }

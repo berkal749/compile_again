@@ -66,10 +66,11 @@
      mc_comma = 282,
      mc_colon = 283,
      op_logic = 284,
-     mc_identifier = 285,
-     mc_real = 286,
-     mc_number = 287,
-     string_literal = 288
+     mc_minus = 285,
+     mc_identifier = 286,
+     mc_real = 287,
+     mc_number = 288,
+     string_literal = 289
    };
 #endif
 
@@ -89,7 +90,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "syn.tab.h"
+#line 94 "syn.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

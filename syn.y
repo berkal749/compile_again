@@ -19,7 +19,7 @@ int yyerror(char *msg);
 %token mc_int mc_flt mc_if mc_else mc_while mc_for mc_print
 %token mc_lbrace mc_rbrace mc_lparen mc_rparen mc_lbracket mc_rbracket
 %token mc_plus mc_mult mc_div mc_pow mc_assign_op mc_semicolon mc_comma mc_colon
-%token op_logic
+%token op_logic  mc_minus
 
 %token <str> mc_identifier mc_real
 %token <ent> mc_number
@@ -34,7 +34,7 @@ S: mc_main mc_identifier mc_semicolon SV SC {
 SV: mc_section_var DECLARATION_LIST;
 
 DECLARATION_LIST:
-      
+      /* empty */
     | DECLARATION_LIST DEC
 ;
 
@@ -78,6 +78,7 @@ CODE:
 INSTRUCTION:
       ASSIGNMENT
     | PRINT_STMT
+    | WHILE_STMT
 ;
 
 ASSIGNMENT:
@@ -97,11 +98,21 @@ PRINT_STMT:
     mc_print mc_lparen string_literal mc_rparen mc_semicolon
 ;
 
+WHILE_STMT:
+    mc_while mc_lparen CONDITION mc_rparen mc_lbrace CODE mc_rbrace
+;
+
+CONDITION:
+      EXPR op_logic EXPR
+    | mc_lparen CONDITION mc_rparen
+;
+
 EXPR:
       mc_number
     | mc_real
     | mc_identifier
     | EXPR mc_plus EXPR
+    | EXPR mc_minus EXPR   
     | EXPR mc_mult EXPR
     | EXPR mc_div EXPR
     | mc_lparen EXPR mc_rparen
